@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/textproto"
+	"strings"
 )
 
 // Client holds the net conn and read/write buffer objects.
@@ -49,7 +50,8 @@ func (c *Connection) ReadLine() (string, error) {
 		return "", errors.New("empty response")
 	}
 
-	if IsErr(line) {
+	// Check for Error
+	if strings.Fields(line)[0] == "-ERR" {
 		return line, fmt.Errorf("something went wrong: %s", line)
 	}
 

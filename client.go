@@ -54,7 +54,7 @@ func NewClient(conn net.Conn) (*Client, error) {
 		return nil, fmt.Errorf("failed to read line: %w", err)
 	}
 
-	if !IsOK(line) {
+	if strings.Fields(line)[0] != "+OK" {
 		return nil, fmt.Errorf("server did not response with +OK: %s", line)
 	}
 
