@@ -23,6 +23,8 @@ type Client struct {
 	conn *Connection
 }
 
+var Debug bool
+
 // Dial opens new connection and creates a new POP3 client.
 func Dial(addr string) (c *Client, err error) {
 	var conn net.Conn
@@ -52,6 +54,10 @@ func NewClient(conn net.Conn) (*Client, error) {
 	line, err := c.conn.ReadLine()
 	if err != nil {
 		return nil, fmt.Errorf("failed to read line: %w", err)
+	}
+
+	if Debug {
+		fmt.Println("Line: ", line)
 	}
 
 	if strings.Fields(line)[0] != "+OK" {
