@@ -58,6 +58,21 @@ func (c *Connection) ReadLine() (string, error) {
 	return line, nil
 }
 
+// ReadDot returns the raw mail message.
+func (c *Connection) ReadDot() (raw []byte, err error) {
+	raw, err = c.Reader.ReadDotBytes()
+	if err != nil {
+		err = fmt.Errorf("failed to read line: %w", err)
+		return
+	}
+
+	if len(raw) < 1 {
+		err = errors.New("empty response")
+		return nil, err
+	}
+	return
+}
+
 // ReadLines reads from the buffer until it hits the message end dot (".").
 func (c *Connection) ReadLines() (lines []string, err error) {
 	for {
