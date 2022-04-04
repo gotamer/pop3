@@ -136,10 +136,7 @@ func (c *Client) Quit() (err error) {
 
 // Status checks if we are connected to a pop3 server
 func (c *Client) Status() bool {
-	if c.conn != nil {
-		return true
-	}
-	return false
+	return c.conn != nil
 }
 
 // Noop will do nothing however can prolong the end of a connection.
